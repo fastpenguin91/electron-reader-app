@@ -1,0 +1,32 @@
+
+Almost done. Problem is that the index is off by 1. the first element has an index of 1 instead of 0 and it's screwing up the ability to delete the correct objects.
+
+check near items.js by line 58 ( getselecteditem )
+
+
+
+
+
+
+
+stopped at: 11:49 on the 2nd video in project
+
+The app appears to stop working in readItem.js  either att offscreenWindow.loadURL()  or offscreenWindow.webContents.on('did-finish-load')
+
+It never logs the message in that function., and neve cleans up.
+
+https://www.electronjs.org/docs/api/web-contents  claims that contents.loadURL returns a PROMISE..
+
+which according to the promise docs on MDN i should be able log out via
+
+
+  offscreenWindow.loadURL(url).then((msg) => {
+    console.log("waaaat");
+  })
+
+but that doesn't work.
+
+
+the problem was two things.  1.  invalid URL. the webContents.capturePage required a valid url
+
+2. the capturePage needed a promise, not a callback
